@@ -1,0 +1,7 @@
+dist/
+dev/preview.html
+dev/preview-secondary.html
+*.deb
+*.tar.gz
+__pycache__/
+node_modules/

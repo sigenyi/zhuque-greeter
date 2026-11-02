@@ -1,0 +1,139 @@
+/*
+ * 朱雀 · ZHUQUE —— 极简赤色终端登录主题
+ * Minimal red terminal login theme for nody-greeter / web-greeter (LightDM).
+ * Static styles only; the one animation is the prompt cursor blink.
+ */
+
+@font-face {
+  font-family: "ZQ Pixel";
+  /* GNU Unifont: the system copy (fonts-unifont) if present, else the bundled subset */
+  src: local("Unifont"), url("../fonts/zhuque-pixel.woff2") format("woff2");
+  font-display: block;
+}
+
+:root {
+  --bg:         #060001;
+  --red:        #ff3b3b;   /* main text */
+  --red-bright: #ffb8ad;   /* what you type, errors */
+  --red-dim:    #8a1a22;   /* menu, date, hints */
+  --ink:        #140001;   /* text on highlighted rows */
+  --glow: 0 0 6px rgba(255, 40, 40, .35);
+
+  --font: "ZQ Pixel", "Unifont", "WenQuanYi Zen Hei Sharp", "WenQuanYi Zen Hei Mono",
+          "Noto Sans Mono CJK SC", "Noto Sans CJK SC", "Droid Sans Fallback", monospace;
+
+  --fs: clamp(15px, 2.6vh, 44px);   /* 28px on a 1080p panel */
+  --lh: 1.5;
+  --edge-x: 8vw;
+  --edge-y: 8vh;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+body {
+  color: var(--red);
+  font-family: var(--font);
+  font-size: var(--fs);
+  line-height: var(--lh);
+  text-shadow: var(--glow);
+  cursor: default;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* ───────────── login prompt (left) ───────────── */
+
+.term {
+  position: absolute;
+  left: var(--edge-x);
+  top: 38vh;
+  width: min(46vw, 30em);
+}
+
+.line { min-height: calc(var(--lh) * 1em); white-space: pre-wrap; word-break: break-all; }
+
+.users .opt { display: flex; gap: .6em; padding: 0 .4em; margin-left: .8em; cursor: pointer; }
+.users .opt .mark { width: 1em; flex: none; }
+.users .opt .note { color: var(--red-dim); text-shadow: none; }
+.users .opt.sel { background: var(--red); color: var(--ink); text-shadow: none; }
+.users .opt.sel .note { color: var(--ink); opacity: .7; }
+
+.prompt { display: flex; align-items: baseline; flex-wrap: wrap; cursor: text; }
+.prompt .typed { color: var(--red-bright); white-space: pre; letter-spacing: .08em; }
+.prompt .busy { margin-left: .8em; color: var(--red-dim); text-shadow: none; }
+
+.cursor {
+  display: inline-block;
+  width: .55em;
+  height: 1.05em;
+  margin-left: .1em;
+  align-self: center;
+  background: var(--red);
+  animation: blink 1.06s steps(1) infinite;
+}
+.cursor.off { visibility: hidden; animation: none; }
+
+@keyframes blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+
+.msgs .info { color: var(--red-dim); text-shadow: none; }
+.msgs .err  { color: var(--red-bright); }
+
+/* ───────────── session + power (bottom left) ───────────── */
+
+.foot {
+  position: absolute;
+  left: var(--edge-x);
+  bottom: var(--edge-y);
+  font-size: .78em;
+}
+.sysmenu { display: flex; flex-wrap: wrap; gap: .2em 1.6em; color: var(--red-dim); text-shadow: none; }
+.mi { padding: 0 .35em; margin-left: -.35em; cursor: pointer; white-space: nowrap; }
+.mi:hover { color: var(--red); }
+.mi.sel { background: var(--red); color: var(--ink); }
+
+/* ───────────── clock (bottom right) ───────────── */
+
+.clock {
+  position: absolute;
+  right: var(--edge-x);
+  bottom: var(--edge-y);
+  text-align: right;
+  line-height: 1.1;
+}
+.clock .time { font-size: 2.6em; letter-spacing: .04em; }
+.clock .date { margin-top: .3em; font-size: .78em; color: var(--red-dim); text-shadow: none; letter-spacing: .1em; }
+
+body.secondary .clock { right: 50%; bottom: 50%; transform: translate(50%, 50%); text-align: center; }
+
+/* hidden input that receives the keyboard */
+.entry {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  border: 0;
+  padding: 0;
+  pointer-events: none;
+}
+
+/* small screens (browser preview only) */
+@media (max-width: 860px) {
+  :root { --fs: 15px; --edge-x: 16px; --edge-y: 16px; }
+  .term { top: 30vh; width: calc(100% - 32px); }
+  .clock { top: 16px; bottom: auto; }
+  .clock .time { font-size: 1.6em; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cursor { animation: none; }
+}

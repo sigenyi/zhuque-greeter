@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>朱雀终端</title>
+  <style>
+/*
+ * 朱雀 · ZHUQUE —— 极简赤色终端登录主题
+ * Minimal red terminal login theme for nody-greeter / web-greeter (LightDM).
+ * Static styles only; the one animation is the prompt cursor blink.
+ */
+
+@font-face {
+  font-family: "ZQ Pixel";
+  /* GNU Unifont: the system copy (fonts-unifont) if present, else the bundled subset */
+  src: local("Unifont"), url("data:font/woff2;base64,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") format("woff2");
+  font-display: block;
+}
+
+:root {
+  --bg:         #060001;
+  --red:        #ff3b3b;   /* main text */
+  --red-bright: #ffb8ad;   /* what you type, errors */
+  --red-dim:    #8a1a22;   /* menu, date, hints */
+  --ink:        #140001;   /* text on highlighted rows */
+  --glow: 0 0 6px rgba(255, 40, 40, .35);
+
+  --font: "ZQ Pixel", "Unifont", "WenQuanYi Zen Hei Sharp", "WenQuanYi Zen Hei Mono",
+          "Noto Sans Mono CJK SC", "Noto Sans CJK SC", "Droid Sans Fallback", monospace;
+
+  --fs: clamp(15px, 2.6vh, 44px);   /* 28px on a 1080p panel */
+  --lh: 1.5;
+  --edge-x: 8vw;
+  --edge-y: 8vh;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+body {
+  color: var(--red);
+  font-family: var(--font);
+  font-size: var(--fs);
+  line-height: var(--lh);
+  text-shadow: var(--glow);
+  cursor: default;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* ───────────── login prompt (left) ───────────── */
+
+.term {
+  position: absolute;
+  left: var(--edge-x);
+  top: 38vh;
+  width: min(46vw, 30em);
+}
+
+.line { min-height: calc(var(--lh) * 1em); white-space: pre-wrap; word-break: break-all; }
+
+.users .opt { display: flex; gap: .6em; padding: 0 .4em; margin-left: .8em; cursor: pointer; }
+.users .opt .mark { width: 1em; flex: none; }
+.users .opt .note { color: var(--red-dim); text-shadow: none; }
+.users .opt.sel { background: var(--red); color: var(--ink); text-shadow: none; }
+.users .opt.sel .note { color: var(--ink); opacity: .7; }
+
+.prompt { display: flex; align-items: baseline; flex-wrap: wrap; cursor: text; }
+.prompt .typed { color: var(--red-bright); white-space: pre; letter-spacing: .08em; }
+.prompt .busy { margin-left: .8em; color: var(--red-dim); text-shadow: none; }
+
+.cursor {
+  display: inline-block;
+  width: .55em;
+  height: 1.05em;
+  margin-left: .1em;
+  align-self: center;
+  background: var(--red);
+  animation: blink 1.06s steps(1) infinite;
+}
+.cursor.off { visibility: hidden; animation: none; }
+
+@keyframes blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+
+.msgs .info { color: var(--red-dim); text-shadow: none; }
+.msgs .err  { color: var(--red-bright); }
+
+/* ───────────── session + power (bottom left) ───────────── */
+
+.foot {
+  position: absolute;
+  left: var(--edge-x);
+  bottom: var(--edge-y);
+  font-size: .78em;
+}
+.sysmenu { display: flex; flex-wrap: wrap; gap: .2em 1.6em; color: var(--red-dim); text-shadow: none; }
+.mi { padding: 0 .35em; margin-left: -.35em; cursor: pointer; white-space: nowrap; }
+.mi:hover { color: var(--red); }
+.mi.sel { background: var(--red); color: var(--ink); }
+
+/* ───────────── clock (bottom right) ───────────── */
+
+.clock {
+  position: absolute;
+  right: var(--edge-x);
+  bottom: var(--edge-y);
+  text-align: right;
+  line-height: 1.1;
+}
+.clock .time { font-size: 2.6em; letter-spacing: .04em; }
+.clock .date { margin-top: .3em; font-size: .78em; color: var(--red-dim); text-shadow: none; letter-spacing: .1em; }
+
+body.secondary .clock { right: 50%; bottom: 50%; transform: translate(50%, 50%); text-align: center; }
+
+/* hidden input that receives the keyboard */
+.entry {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  border: 0;
+  padding: 0;
+  pointer-events: none;
+}
+
+/* small screens (browser preview only) */
+@media (max-width: 860px) {
+  :root { --fs: 15px; --edge-x: 16px; --edge-y: 16px; }
+  .term { top: 30vh; width: calc(100% - 32px); }
+  .clock { top: 16px; bottom: auto; }
+  .clock .time { font-size: 1.6em; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cursor { animation: none; }
+}
+
+
+#demo-note{position:fixed;left:50%;top:10px;transform:translateX(-50%);z-index:50;
+  font:13px/1.5 "ZQ Pixel","Unifont",monospace;color:#8a1a22;text-shadow:none;pointer-events:none;white-space:nowrap}
+#demo-note.big{font-size:16px;color:#ffb8ad;top:45%}
+@media (max-width:860px){#demo-note{position:absolute;top:auto;bottom:4px;white-space:normal;width:calc(100% - 32px);text-align:center}}
+</style>
+</head>
+<body class="primary">
+  <div id="demo-note">演示模式 · 测试口令：zhuque</div>
+  <main class="term" id="term">
+    <div id="console" class="console" aria-live="polite"></div>
+  </main>
+
+  <footer class="foot">
+    <nav class="sysmenu" id="sysmenu"></nav>
+  </footer>
+
+  <div class="clock">
+    <div class="time" id="clock-time"></div>
+    <div class="date" id="clock-date"></div>
+  </div>
+
+  <input id="entry" class="entry" type="password" autocomplete="off" autocorrect="off"
+         autocapitalize="off" spellcheck="false" aria-label="终端输入">
+
+  <script>
+/*
+ * Browser-only mock of the nody-greeter / web-greeter 3 JavaScript API.
+ * NOT installed with the theme. Used for the live preview and automated tests.
+ *
+ * Behaviour mirrors liblightdm where it matters for themes:
+ *  - authenticate() bumps a sequence number; results of older rounds are dropped
+ *  - cancel_authentication() alone produces an "authentication-complete" (failed)
+ *  - respond() is only legal while a prompt is waiting (misuse is recorded)
+ */
+(function () {
+  "use strict";
+  var P = new URLSearchParams(location.search);
+  var DEMO_PASSWORD = P.get("pw") || "zhuque";
+  var USERS = (P.get("users") || "fox,guest").split(",").filter(Boolean);
+
+  window.__mock = { calls: [], misuse: [], started: null, power: [] };
+  function rec(name, arg) { window.__mock.calls.push(arg === undefined ? name : name + ":" + arg); }
+  function misuse(msg) { window.__mock.misuse.push(msg); console.warn("[mock] MISUSE " + msg); }
+
+  function Signal(name) { this.name = name; this.cbs = []; }
+  Signal.prototype.connect = function (cb) { if (typeof cb === "function") this.cbs.push(cb); };
+  Signal.prototype.disconnect = function (cb) { this.cbs = this.cbs.filter(function (c) { return c !== cb; }); };
+  Signal.prototype._emit = function () {
+    var args = arguments;
+    this.cbs.forEach(function (cb) { cb.apply(null, args); });
+  };
+
+  var seq = 0, waiting = 0, inAuth = false, authUser = null, isAuth = false;
+
+  var lightdm = {
+    show_prompt: new Signal("show-prompt"),
+    show_message: new Signal("show-message"),
+    authentication_complete: new Signal("authentication-complete"),
+    autologin_timer_expired: new Signal("autologin-timer-expired"),
+    battery_update: new Signal("battery_update"),
+    brightness_update: new Signal("brightness_update"),
+    idle: new Signal("idle"),
+    reset: new Signal("reset"),
+
+    get hostname() { return P.get("host") || "localhost"; },
+    get users() {
+      return USERS.map(function (u, i) {
+        return { username: u, display_name: i === 0 ? u : u.charAt(0).toUpperCase() + u.slice(1),
+          home_directory: "/home/" + u, image: "", language: "", layout: "", layouts: [],
+          logged_in: false, session: "xfce", background: "" };
+      });
+    },
+    get sessions() {
+      return [
+        { key: "xfce", name: "Xfce Session", comment: "Use this session to run Xfce as your desktop environment", type: "x" },
+        { key: "lightdm-xsession", name: "Default X session", comment: "", type: "x" }
+      ];
+    },
+    get default_session() { return "lightdm-xsession"; },
+    get hide_users_hint() { return P.get("hide") === "1"; },
+    get select_user_hint() { return undefined; },
+    get lock_hint() { return P.get("lock") === "1"; },
+    get can_shutdown() { return true; },
+    get can_restart() { return true; },
+    get can_suspend() { return true; },
+    get can_hibernate() { return false; },
+    get can_access_battery() { return true; },
+    get battery_data() {
+      return { name: "BAT0", level: 87, status: "Discharging", ac_status: false, capacity: 100, time: "", watt: 0 };
+    },
+    get in_authentication() { return inAuth; },
+    get is_authenticated() { return isAuth; },
+    get authentication_user() { return authUser; },
+
+    authenticate: function (username) {
+      rec("authenticate", username);
+      seq += 1;
+      var my = seq;
+      inAuth = true; isAuth = false; authUser = username; waiting = 0;
+      setTimeout(function () {
+        if (my !== seq) return;
+        waiting = 1;
+        lightdm.show_prompt._emit("Password: ", 1);
+      }, 140);
+      return true;
+    },
+    cancel_authentication: function () {
+      rec("cancel_authentication");
+      if (!inAuth) return true;
+      var my = seq;
+      waiting = 0;
+      setTimeout(function () {            // liblightdm: END_AUTHENTICATION for this round
+        if (my !== seq || !inAuth) return;
+        inAuth = false; isAuth = false;
+        lightdm.authentication_complete._emit();
+      }, 60);
+      return true;
+    },
+    respond: function (response) {
+      rec("respond");
+      if (waiting <= 0) { misuse("respond() without a pending prompt"); return false; }
+      waiting -= 1;
+      var my = seq;
+      setTimeout(function () {
+        if (my !== seq) return;
+        inAuth = false;
+        isAuth = response === DEMO_PASSWORD;
+        lightdm.authentication_complete._emit();
+      }, 900);
+      return true;
+    },
+    start_session: function (key) {
+      rec("start_session", key);
+      if (!isAuth) misuse("start_session() while not authenticated");
+      window.__mock.started = key;
+      showDemoNote("（演示）会话「" + key + "」已启动 —— 真实系统会在此进入桌面。三秒后重新载入……");
+      setTimeout(function () { if (!P.get("noreload")) location.reload(); }, 3200);
+      return true;
+    },
+    shutdown: function () { rec("shutdown"); window.__mock.power.push("shutdown"); return true; },
+    restart: function () { rec("restart"); window.__mock.power.push("restart"); return true; },
+    suspend: function () { rec("suspend"); window.__mock.power.push("suspend"); return true; },
+    hibernate: function () { rec("hibernate"); window.__mock.power.push("hibernate"); return true; },
+    set_language: function () { return false; }
+  };
+
+  function showDemoNote(text) {
+    var n = document.getElementById("demo-note");
+    if (!n) return;
+    n.textContent = text;
+    n.classList.add("big");
+  }
+
+  window.lightdm = lightdm;
+  window.greeter_config = {
+    branding: { background_images_dir: "/usr/share/backgrounds", logo_image: "", user_image: "" },
+    greeter: { debug_mode: false, detect_theme_errors: true, screensaver_timeout: 300, secure_mode: true, theme: "zhuque", time_language: "" },
+    features: { battery: true, backlight: { enabled: false, value: 10, steps: 0 } }
+  };
+  window.theme_utils = {
+    dirlist: function (p, o, cb) { if (cb) cb([]); },
+    get_current_localized_date: function () { return new Date().toLocaleDateString("zh-CN"); },
+    get_current_localized_time: function () { return new Date().toLocaleTimeString("zh-CN"); }
+  };
+  var meta = { id: 1, is_primary: P.get("secondary") !== "1", position: { x: 0, y: 0 },
+    size: { width: innerWidth, height: innerHeight }, overallBoundary: { minX: 0, maxX: innerWidth, minY: 0, maxY: innerHeight } };
+  window.greeter_comm = {
+    get window_metadata() { return meta; },
+    broadcast: function (data) {
+      var ev = new Event("GreeterBroadcastEvent");
+      ev.window = meta; ev.data = data;
+      setTimeout(function () { window.dispatchEvent(ev); }, 0);
+    },
+    whenReady: function () { return Promise.resolve(); }
+  };
+
+  // Same timing as nody-greeter's preload: DOMContentLoaded + 2 ms.
+  window.addEventListener("DOMContentLoaded", function () {
+    setTimeout(function () { window.dispatchEvent(new Event("GreeterReady")); }, 2);
+  });
+})();
+
+</script>
+<script>
+/*
+ * 朱雀 · ZHUQUE —— 极简赤色终端登录主题（主逻辑）
+ * Theme logic for nody-greeter / web-greeter 3 (LightDM). Plain ES5-style script,
+ * no modules, no network access, no console.error() — nody-greeter treats any
+ * console error as a theme crash and offers to swap to its default theme.
+ */
+(function () {
+  "use strict";
+
+  /* ═════════════════════════ 配置 · CONFIG ═════════════════════════ */
+
+  var CONFIG = {
+    rememberUser: true       // 记住上次登录的用户和会话
+  };
+
+  /* ═════════════════════════ 文案 · STRINGS (简体中文) ═════════════════════════ */
+
+  var T = {
+    selectOperator: "选择操作员：",
+    otherUser: "其他用户……",
+    loggedIn: "〔在线〕",
+    operator: "操作员",
+    username: "用户名",
+    password: "访问口令",
+    passwordCurrent: "当前口令",
+    passwordNew: "新口令",
+    passwordRetype: "确认新口令",
+    verifyCode: "验证码",
+    verifying: "验证中……",
+    denied: "访问被拒绝",
+    granted: "访问已授权",
+    capsLock: "注意：大写锁定已开启",
+    sessionFail: "无法启动会话：{session}",
+    noUsers: "未发现操作员，请输入用户名。",
+    authRestart: "验证中断，正在重试……",
+    authStuck: "无法验证此操作员。按 Esc 选择其他用户。",
+    emptyName: "用户名不能为空。",
+    sessionLabel: "会话",
+    restart: "重启",
+    shutdown: "关机",
+    suspend: "挂起",
+    hibernate: "休眠",
+    confirm: "确认{action}？回车 确认 · Esc 取消",
+    doing: "正在{action}……",
+    actionFail: "{action}失败",
+    week: "星期"
+  };
+
+  var SESSION_NAMES = {
+    "xfce": "Xfce 桌面",
+    "xfce-wayland": "Xfce 桌面（Wayland）",
+    "lightdm-xsession": "默认 X 会话",
+    "default": "默认会话",
+    "gnome": "GNOME 桌面",
+    "gnome-xorg": "GNOME 桌面（Xorg）",
+    "gnome-wayland": "GNOME 桌面（Wayland）",
+    "gnome-classic": "GNOME 经典",
+    "plasma": "KDE Plasma 桌面",
+    "plasmax11": "KDE Plasma（X11）",
+    "plasmawayland": "KDE Plasma（Wayland）",
+    "cinnamon": "Cinnamon 桌面",
+    "mate": "MATE 桌面",
+    "lxqt": "LXQt 桌面",
+    "lxde": "LXDE 桌面",
+    "LXDE": "LXDE 桌面",
+    "i3": "i3 窗口管理器",
+    "openbox": "Openbox 窗口管理器",
+    "sway": "Sway 合成器",
+    "awesome": "Awesome 窗口管理器",
+    "bspwm": "bspwm 窗口管理器",
+    "xmonad": "XMonad 窗口管理器",
+    "icewm-session": "IceWM 桌面",
+    "budgie-desktop": "Budgie 桌面"
+  };
+
+  // PAM 的英文提示 → 中文（顺序很重要）
+  var MESSAGE_MAP = [
+    [/account.*expired|expired.*account/i, "账户已过期，请联系管理员。"],
+    [/password.*expired|expired.*password|change your password|must change/i, "口令已过期，必须立即修改。"],
+    [/locked|too many|maximum number/i, "账户已被暂时锁定，请稍后再试。"],
+    [/(place|swipe|touch|scan|put).*finger|finger.*(reader|sensor)/i, "请将手指放在指纹识别器上……"],
+    [/(fingerprint|finger).*(not match|no match|fail|again)|failed to match/i, "指纹不匹配，请重试。"],
+    [/do(es)? not match|mismatch|sorry, passwords/i, "两次输入的口令不一致。"],
+    [/bad password|too short|too simple|dictionary|palindrome|too similar/i, "新口令强度不足，请换一个更复杂的口令。"],
+    [/unchanged|exhausted|manipulation error/i, "口令未被修改。"],
+    [/successfully|updated/i, "操作成功。"],
+    [/authentication (failure|failed)|incorrect|invalid/i, "口令错误。"]
+  ];
+
+  var WEEKDAYS = "日一二三四五六";
+
+  /* ═════════════════════════ 小工具 · helpers ═════════════════════════ */
+
+  function $(id) { return document.getElementById(id); }
+
+  function log() {
+    try {
+      var a = Array.prototype.slice.call(arguments);
+      a.unshift("[zhuque]");
+      console.log.apply(console, a);   // never console.error (see header)
+    } catch (e) { /* ignore */ }
+  }
+
+  function safe(fn, fallback) {
+    try {
+      var v = fn();
+      return (v === undefined || v === null) ? fallback : v;
+    } catch (e) {
+      log("safe() caught:", e && e.message);
+      return fallback;
+    }
+  }
+
+  function esc(s) {
+    return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;", "'": "&#39;" }[c];
+    });
+  }
+
+  function fmt(s, vars) {
+    return String(s).replace(/\{(\w+)\}/g, function (m, k) {
+      return vars && vars[k] != null ? vars[k] : m;
+    });
+  }
+
+  function pad2(n) { return (n < 10 ? "0" : "") + n; }
+
+  var store = {
+    get: function (k) { try { return window.localStorage.getItem("zhuque." + k); } catch (e) { return null; } },
+    set: function (k, v) { try { window.localStorage.setItem("zhuque." + k, v); } catch (e) { /* ignore */ } }
+  };
+
+  /* ═════════════════════════ 状态 · state ═════════════════════════ */
+
+  var ldm = null;              // window.lightdm
+  var ui = {};
+  var st = {
+    role: "primary",
+    mode: "password",          // select|username|password|busy|stuck|menu|confirm|granted
+    prevMode: "password",
+    users: [],
+    sessions: [],
+    hideUsers: false,
+    listIdx: 0,
+    user: null,                // { username, display_name, session, logged_in }
+    sessionKey: null,
+    authActive: false,
+    promptReady: false,
+    promptLabel: T.password,
+    promptSecret: true,
+    pending: null,
+    responded: false,
+    failStreak: 0,
+    msgs: [],
+    caps: false,
+    menuIdx: 0,
+    menu: [],
+    confirm: null
+  };
+
+  /* ═════════════════════════ 启动 · bootstrapping ═════════════════════════ */
+
+  var started = false;
+
+  function start() {
+    if (started) return;
+    started = true;
+    try {
+      init();
+    } catch (e) {
+      log("init failed:", e && e.stack);
+    }
+  }
+
+  // nody-greeter / web-greeter fire "GreeterReady" once window.lightdm is usable.
+  window.addEventListener("GreeterReady", start);
+  // Safety net: if the event was missed but the API exists, start anyway.
+  setTimeout(function () { if (!started && window.lightdm) start(); }, 3000);
+
+  // Never let an unexpected error surface as an "Uncaught" console error.
+  window.addEventListener("error", function (ev) {
+    log("suppressed error:", ev && ev.message);
+    if (ev && ev.preventDefault) ev.preventDefault();
+  });
+  window.addEventListener("unhandledrejection", function (ev) {
+    log("suppressed rejection:", ev && ev.reason);
+    if (ev && ev.preventDefault) ev.preventDefault();
+  });
+
+  function init() {
+    ldm = window.lightdm || null;
+    st.role = document.body.classList.contains("secondary") ? "secondary" : "primary";
+
+    // A primary page that lands on a non-primary monitor must stay passive.
+    if (st.role === "primary") {
+      var isPrimary = safe(function () { return window.greeter_comm.window_metadata.is_primary; }, true);
+      if (isPrimary === false) {
+        st.role = "secondary";
+        document.body.classList.remove("primary");
+        document.body.classList.add("secondary");
+        ["term", "sysmenu"].forEach(function (id) { var el = $(id); if (el) el.style.display = "none"; });
+      }
+    }
+
+    ["console", "sysmenu", "entry", "clock-time", "clock-date"].forEach(function (id) { ui[id] = $(id); });
+    startClock();
+    if (st.role === "secondary") return;   // other monitors: clock only
+
+    st.users = safe(function () { return ldm.users; }, []) || [];
+    st.sessions = safe(function () { return ldm.sessions; }, []) || [];
+    st.hideUsers = !!safe(function () { return ldm.hide_users_hint; }, false);
+    st.sessionKey = pickSession(preselect());
+
+    connectSignals();
+    bindInput();
+    buildMenu();
+    enterLogin();
+  }
+
+  /* ═════════════════════════ 登录流程 · login flow ═════════════════════════ */
+
+  // Who should the prompt open for? LightDM's hint (e.g. lock screen) >
+  // last successful login > first listed user. null → ask for a user name.
+  function preselect() {
+    var hint = safe(function () { return ldm.select_user_hint; }, null);
+    var remembered = CONFIG.rememberUser ? store.get("lastUser") : null;
+    var name = hint || remembered;
+    for (var i = 0; i < st.users.length; i++) {
+      if (st.users[i].username === name) return st.users[i];
+    }
+    if (name) return { username: name };
+    return (!st.hideUsers && st.users.length) ? st.users[0] : null;
+  }
+
+  function enterLogin() {
+    var u = preselect();
+    if (u) { chooseUser(u); return; }
+    if (st.users.length === 0) addMsg(T.noUsers, "info");
+    openUsername();
+  }
+
+  function chooseUser(user) {
+    st.user = user;
+    st.sessionKey = pickSession(user);
+    st.failStreak = 0;
+    renderMenu();
+    beginAuth();
+    setMode("password");
+  }
+
+  function pickSession(user) {
+    var keys = st.sessions.map(function (s) { return s.key; });
+    function ok(k) { return k && keys.indexOf(k) >= 0; }
+    var saved = user && user.username ? store.get("session." + user.username) : null;
+    if (ok(saved)) return saved;
+    if (user && ok(user.session)) return user.session;
+    var def = safe(function () { return ldm.default_session; }, null);
+    if (ok(def)) return def;
+    return keys.length ? keys[0] : null;
+  }
+
+  function beginAuth() {
+    st.promptReady = false;
+    st.pending = null;
+    st.responded = false;
+    st.promptLabel = T.password;
+    st.promptSecret = true;
+    st.authActive = true;
+    // cancel + authenticate in the same tick: liblightdm ignores the stale
+    // "authentication-complete" of the cancelled round (sequence numbers).
+    safe(function () { return ldm.cancel_authentication(); }, false);
+    safe(function () { return ldm.authenticate(st.user.username); }, false);
+  }
+
+  function stopAuth() {
+    st.authActive = false;
+    st.promptReady = false;
+    st.pending = null;
+    safe(function () { return ldm.cancel_authentication(); }, false);
+  }
+
+  function connectSignals() {
+    if (!ldm) return;
+    safe(function () { ldm.show_prompt.connect(onPrompt); });
+    safe(function () { ldm.show_message.connect(onMessage); });
+    safe(function () { ldm.authentication_complete.connect(onComplete); });
+  }
+
+  function onPrompt(text, type) {
+    try {
+      if (!st.authActive) return;
+      st.promptReady = true;
+      st.promptSecret = type !== 0;
+      st.promptLabel = promptLabel(text, type);
+      if (st.pending !== null) {
+        var p = st.pending;
+        st.pending = null;
+        sendResponse(p);
+        return;
+      }
+      if (st.mode === "busy" || st.mode === "password") setMode("password");
+      else render();
+    } catch (e) { log("onPrompt:", e && e.message); }
+  }
+
+  function onMessage(text, type) {
+    try {
+      if (!text) return;
+      addMsg(translateMessage(text), type === 1 ? "err" : "info");
+    } catch (e) { log("onMessage:", e && e.message); }
+  }
+
+  function onComplete() {
+    try {
+      var ok = !!safe(function () { return ldm.is_authenticated; }, false);
+      if (ok) { granted(); return; }
+      if (!st.authActive) return;          // echo of our own cancellation
+      st.authActive = false;
+      st.promptReady = false;
+      if (st.responded) {
+        st.failStreak = 0;
+        denied();
+      } else {
+        // PAM ended without asking us anything (fingerprint timeout, locked account…)
+        st.failStreak += 1;
+        if (st.failStreak > 3) {
+          addMsg(T.authStuck, "err");
+          setMode("stuck");
+        } else {
+          addMsg(T.authRestart, "info");
+          setTimeout(function () {
+            if (st.mode === "password" || st.mode === "busy") { beginAuth(); setMode("password"); }
+          }, 1200);
+        }
+      }
+    } catch (e) { log("onComplete:", e && e.message); }
+  }
+
+  function promptLabel(text, type) {
+    var t = String(text || "").toLowerCase();
+    if (/current|\(current\)|old/.test(t)) return T.passwordCurrent;
+    if (/retype|again|confirm|repeat|verify new/.test(t)) return T.passwordRetype;
+    if (/new/.test(t)) return T.passwordNew;
+    if (/login|user ?name/.test(t)) return T.username;
+    if (/code|token|otp|verification|one-time/.test(t)) return T.verifyCode;
+    if (/pass|口令|密码/.test(t) || type !== 0) return T.password;
+    return String(text || "").replace(/[:：]\s*$/, "") || T.password;
+  }
+
+  function translateMessage(text) {
+    for (var i = 0; i < MESSAGE_MAP.length; i++) {
+      if (MESSAGE_MAP[i][0].test(text)) return MESSAGE_MAP[i][1];
+    }
+    return text;
+  }
+
+  function submit() {
+    var v = ui.entry.value;
+    ui.entry.value = "";
+    if (st.mode === "username") {
+      var name = v.trim();
+      if (!name) { addMsg(T.emptyName, "err"); return; }
+      var found = null;
+      for (var i = 0; i < st.users.length; i++) if (st.users[i].username === name) found = st.users[i];
+      st.msgs = [];
+      chooseUser(found || { username: name });
+      return;
+    }
+    if (st.mode !== "password") return;
+    if (!st.authActive) beginAuth();
+    if (st.promptReady) sendResponse(v);
+    else { st.pending = v; st.responded = true; setMode("busy"); }
+  }
+
+  function sendResponse(v) {
+    st.promptReady = false;
+    st.responded = true;
+    setMode("busy");
+    safe(function () { return ldm.respond(v); }, false);
+  }
+
+  function denied() {
+    st.msgs = [{ text: T.denied, kind: "plain" }];
+    beginAuth();
+    setMode("password");
+  }
+
+  function granted() {
+    if (st.mode === "granted") return;
+    st.authActive = false;
+    if (CONFIG.rememberUser && st.user) {
+      store.set("lastUser", st.user.username);
+      if (st.sessionKey) store.set("session." + st.user.username, st.sessionKey);
+    }
+    st.msgs = [{ text: T.granted, kind: "plain" }];
+    setMode("granted");
+    // give the browser one frame to paint the line, then hand over to LightDM
+    setTimeout(function () {
+      var ok = safe(function () { return ldm.start_session(st.sessionKey); }, true);
+      if (ok === false) {
+        st.msgs = [{ text: fmt(T.sessionFail, { session: sessionName(st.sessionKey) }), kind: "err" }];
+        beginAuth();
+        setMode("password");
+      }
+    }, 60);
+  }
+
+  /* ─────────────── user list / manual username ─────────────── */
+
+  function openUserList() {
+    stopAuth();
+    var cur = st.user ? st.user.username : null;
+    st.listIdx = 0;
+    for (var i = 0; i < st.users.length; i++) if (st.users[i].username === cur) st.listIdx = i;
+    setMode("select");
+  }
+
+  function openUsername() {
+    stopAuth();
+    st.user = null;
+    ui.entry.value = "";
+    setMode("username");
+  }
+
+  function openUserListOrName() {
+    st.msgs = [];
+    if (st.users.length && !st.hideUsers) openUserList();
+    else openUsername();
+  }
+
+  function chooseListItem(i) {
+    if (i >= st.users.length) { openUsername(); return; }
+    st.msgs = [];
+    chooseUser(st.users[i]);
+  }
+
+  /* ─────────────── session + power menu ─────────────── */
+
+  function buildMenu() {
+    st.menu = [{ id: "session" }];
+    if (safe(function () { return ldm.can_restart; }, false)) st.menu.push({ id: "restart" });
+    if (safe(function () { return ldm.can_shutdown; }, false)) st.menu.push({ id: "shutdown" });
+    if (safe(function () { return ldm.can_suspend; }, false)) st.menu.push({ id: "suspend" });
+    if (safe(function () { return ldm.can_hibernate; }, false)) st.menu.push({ id: "hibernate" });
+    renderMenu();
+  }
+
+  function sessionName(key) {
+    if (!key) return SESSION_NAMES["default"];
+    if (SESSION_NAMES[key]) return SESSION_NAMES[key];
+    for (var i = 0; i < st.sessions.length; i++) {
+      if (st.sessions[i].key === key) return st.sessions[i].name || key;
+    }
+    return key;
+  }
+
+  function cycleSession() {
+    if (!st.sessions.length) return;
+    var keys = st.sessions.map(function (s) { return s.key; });
+    var i = keys.indexOf(st.sessionKey);
+    st.sessionKey = keys[(i + 1) % keys.length];
+    renderMenu();
+  }
+
+  function renderMenu() {
+    if (!ui.sysmenu) return;
+    var h = [];
+    for (var i = 0; i < st.menu.length; i++) {
+      var it = st.menu[i];
+      var label = it.id === "session" ? T.sessionLabel + "：" + esc(sessionName(st.sessionKey)) : T[it.id];
+      var sel = (st.mode === "menu" || st.mode === "confirm") && i === st.menuIdx;
+      h.push("<span class=\"mi" + (sel ? " sel" : "") + "\" data-mi=\"" + i + "\">" + label + "</span>");
+    }
+    ui.sysmenu.innerHTML = h.join("");
+  }
+
+  function openMenu() {
+    if (st.mode !== "menu" && st.mode !== "confirm") {
+      st.prevMode = st.mode;
+      st.menuIdx = 0;             // always reopen on the harmless first item
+    }
+    setMode("menu");
+  }
+
+  function closeMenu() {
+    st.confirm = null;
+    var back = st.prevMode;
+    if (back === "password" && !st.authActive && st.user) beginAuth();
+    setMode(back === "menu" || back === "confirm" ? "password" : back);
+  }
+
+  function activateMenu(i) {
+    var it = st.menu[i];
+    if (!it) return;
+    st.menuIdx = i;
+    if (it.id === "session") { cycleSession(); setMode("menu"); return; }
+    st.confirm = it.id;
+    setMode("confirm");
+  }
+
+  function doPower(id) {
+    st.confirm = null;
+    st.msgs = [{ text: fmt(T.doing, { action: T[id] }), kind: "info" }];
+    stopAuth();
+    setMode("busy");
+    var ok = safe(function () { return ldm[id](); }, true);
+    if (ok === false) st.msgs = [{ text: fmt(T.actionFail, { action: T[id] }), kind: "err" }];
+    // Suspend/hibernate return after resume; failed requests return at once.
+    setTimeout(function () {
+      if (st.mode !== "busy") return;
+      if (ok !== false) st.msgs = [];
+      if (st.user) { beginAuth(); setMode("password"); } else setMode("username");
+    }, ok === false ? 1500 : 3000);
+  }
+
+  /* ─────────────── messages ─────────────── */
+
+  function addMsg(text, kind) {
+    st.msgs.push({ text: text, kind: kind || "info" });
+    if (st.msgs.length > 2) st.msgs.shift();
+    render();
+  }
+
+  /* ═════════════════════════ 渲染 · rendering ═════════════════════════ */
+
+  function setMode(m) {
+    st.mode = m;
+    if (m !== "password" && m !== "username") ui.entry.value = "";
+    render();
+    renderMenu();
+    focusEntry();
+  }
+
+  function render() {
+    if (!ui.console || st.role !== "primary") return;
+    var m = st.mode, h = [], i;
+
+    if (m === "select") {
+      h.push("<div class=\"line\">" + T.selectOperator + "</div><div class=\"users\">");
+      for (i = 0; i <= st.users.length; i++) {
+        var u = st.users[i];
+        var note = "";
+        if (u && u.display_name && u.display_name !== u.username) note += "（" + esc(u.display_name) + "）";
+        if (u && u.logged_in) note += T.loggedIn;
+        var sel = i === st.listIdx;
+        h.push("<div class=\"opt" + (sel ? " sel" : "") + "\" data-idx=\"" + i + "\"><span class=\"mark\">" +
+          (sel ? "▶" : "") + "</span><span>" + (u ? esc(u.username) : T.otherUser) +
+          "</span><span class=\"note\">" + note + "</span></div>");
+      }
+      h.push("</div>");
+    } else if (m === "username") {
+      h.push(promptHtml(T.username, esc(ui.entry.value), true, false));
+    } else {
+      h.push("<div class=\"line\">" + T.operator + "：" + esc(st.user ? st.user.username : "") + "</div>");
+      if (m !== "stuck" && m !== "granted") {
+        var shown = st.promptSecret ? new Array(ui.entry.value.length + 1).join("*") : esc(ui.entry.value);
+        h.push(promptHtml(st.promptLabel, shown, m === "password", m === "busy" && st.authActive));
+      }
+    }
+
+    h.push("<div class=\"msgs\">");
+    for (i = 0; i < st.msgs.length; i++) {
+      h.push("<div class=\"line " + st.msgs[i].kind + "\">" + esc(st.msgs[i].text) + "</div>");
+    }
+    h.push("</div>");
+
+    if (m === "confirm" && st.confirm) {
+      h.push("<div class=\"line msgs\"><span class=\"err\">" + fmt(T.confirm, { action: T[st.confirm] }) + "</span></div>");
+    }
+    if (st.caps && (m === "password" || m === "username")) {
+      h.push("<div class=\"line msgs\"><span class=\"err\">" + T.capsLock + "</span></div>");
+    }
+
+    ui.console.innerHTML = h.join("");
+  }
+
+  function promptHtml(label, value, cursorOn, busy) {
+    return "<div class=\"prompt\"><span>" + esc(label) + "：</span>" +
+      "<span class=\"typed\">" + value + "</span><span class=\"cursor" + (cursorOn ? "" : " off") + "\"></span>" +
+      (busy ? "<span class=\"busy\">" + T.verifying + "</span>" : "") + "</div>";
+  }
+
+  /* ═════════════════════════ 键盘与鼠标 · input ═════════════════════════ */
+
+  function focusEntry() {
+    if (st.role !== "primary" || !ui.entry) return;
+    try { if (document.activeElement !== ui.entry) ui.entry.focus(); } catch (e) { /* ignore */ }
+  }
+
+  function bindInput() {
+    ui.entry.focus();
+    ui.entry.addEventListener("blur", function () { setTimeout(focusEntry, 0); });
+    ui.entry.addEventListener("input", function () {
+      if (st.mode === "password" || st.mode === "username") render();
+      else ui.entry.value = "";
+    });
+
+    document.addEventListener("keydown", onKey, true);
+    document.addEventListener("keyup", updateCaps, true);
+
+    document.addEventListener("mousedown", function (e) {
+      var t = e.target;
+      var opt = t && t.closest ? t.closest(".opt") : null;
+      var mi = t && t.closest ? t.closest(".mi") : null;
+      if (opt && st.mode === "select") {
+        st.listIdx = parseInt(opt.getAttribute("data-idx"), 10) || 0;
+        chooseListItem(st.listIdx);
+      } else if (mi && st.mode !== "granted" && st.mode !== "busy") {
+        if (st.mode !== "menu" && st.mode !== "confirm") st.prevMode = st.mode;
+        activateMenu(parseInt(mi.getAttribute("data-mi"), 10) || 0);
+      }
+      e.preventDefault();          // keep focus on the hidden entry
+      focusEntry();
+    }, true);
+  }
+
+  function updateCaps(e) {
+    if (!e || !e.getModifierState) return;
+    var caps = !!e.getModifierState("CapsLock");
+    if (caps !== st.caps) { st.caps = caps; render(); }
+  }
+
+  function onKey(e) {
+    updateCaps(e);
+    var k = e.key;
+    var m = st.mode;
+
+    if (m === "granted") { e.preventDefault(); return; }
+
+    if (m === "busy") {
+      if (k === "Escape" && st.authActive) { e.preventDefault(); openUserListOrName(); return; }
+      if (k === "Enter" || k === "Tab") e.preventDefault();
+      return;
+    }
+
+    if (m === "select") {
+      var n = st.users.length + 1;
+      if (k === "ArrowUp") { st.listIdx = (st.listIdx + n - 1) % n; render(); }
+      else if (k === "ArrowDown") { st.listIdx = (st.listIdx + 1) % n; render(); }
+      else if (k === "Enter") chooseListItem(st.listIdx);
+      else if (k === "Tab") openMenu();
+      else if (k === "Escape" && st.user) chooseUser(st.user);
+      else return;
+      e.preventDefault();
+      return;
+    }
+
+    if (m === "confirm") {
+      e.preventDefault();
+      if (k === "Enter") doPower(st.confirm);
+      else if (k === "Escape") { st.confirm = null; setMode("menu"); }
+      return;
+    }
+
+    if (m === "menu") {
+      var c = st.menu.length;
+      if (k === "ArrowLeft" || k === "ArrowUp") { st.menuIdx = (st.menuIdx + c - 1) % c; renderMenu(); }
+      else if (k === "ArrowRight" || k === "ArrowDown") { st.menuIdx = (st.menuIdx + 1) % c; renderMenu(); }
+      else if (k === "Enter") activateMenu(st.menuIdx);
+      else if (k === "Escape" || k === "Tab") closeMenu();
+      e.preventDefault();
+      return;
+    }
+
+    if (m === "stuck") {
+      if (k === "Escape") { e.preventDefault(); openUserListOrName(); }
+      else if (k === "Tab") { e.preventDefault(); openMenu(); }
+      return;
+    }
+
+    if (m === "password" || m === "username") {
+      if (k === "Enter") { e.preventDefault(); submit(); return; }
+      if (k === "Tab") { e.preventDefault(); openMenu(); return; }
+      if (k === "Escape") {
+        e.preventDefault();
+        if (m === "password") openUserListOrName();
+        else if (st.users.length && !st.hideUsers) { st.msgs = []; openUserList(); }
+      }
+    }
+  }
+
+  /* ═════════════════════════ 时钟 · clock ═════════════════════════ */
+
+  function startClock() {
+    var lastTime = "", lastDate = "";
+    (function tick() {
+      var d = new Date();
+      var time = pad2(d.getHours()) + ":" + pad2(d.getMinutes());
+      var date = d.getFullYear() + "年" + (d.getMonth() + 1) + "月" + d.getDate() + "日　" + T.week + WEEKDAYS.charAt(d.getDay());
+      if (time !== lastTime && ui["clock-time"]) { ui["clock-time"].textContent = time; lastTime = time; }
+      if (date !== lastDate && ui["clock-date"]) { ui["clock-date"].textContent = date; lastDate = date; }
+      setTimeout(tick, 1000 - (Date.now() % 1000) + 5);
+    })();
+  }
+
+  // exposed for the browser preview harness only
+  window.__zhuque = { st: st, config: CONFIG, strings: T };
+})();
+
+</script>
+</body>
+</html>
