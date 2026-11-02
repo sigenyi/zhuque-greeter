@@ -71,7 +71,7 @@ It does the following:
 command should end with `greeter-session=nody-greeter`:
 
 ```bash
-lightdm --show-config 2>&1 | grep greeter-session
+/usr/sbin/lightdm --show-config 2>&1 | grep greeter-session
 ```
 
 The second should print a version number such as `1.0.0`:
